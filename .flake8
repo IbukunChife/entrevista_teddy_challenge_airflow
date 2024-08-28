@@ -1,0 +1,4 @@
+[flake8]
+ignore = E402
+max-line-length = 79
+exclude = __init__.py, tests/* alembic/versions/*

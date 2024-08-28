@@ -1,0 +1,43 @@
+name: Python App Tests Workflow
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Install Pipenv
+        run: |
+          pip install pipenv
+      - name: Install dependencies
+        run: |
+          pipenv install --dev
+      - name: Format code with black
+        run: |
+          pipenv run black --check .
+      - name: Lint with flake8
+        run: |
+          pipenv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        env:
+          HOST: host_test
+          DB_PORT: 5432
+          DB_USER: user_test
+          DB_PASSWORD: password_test
+          DB_NAME: db_name
+        run: |
+          pipenv run pytest

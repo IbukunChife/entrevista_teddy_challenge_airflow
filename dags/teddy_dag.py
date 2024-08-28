@@ -1,6 +1,6 @@
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from airflow.hooks.base_hook import BaseHook
+from airflow.operators.python import PythonOperator
+from airflow.hooks.base import BaseHook
 from airflow.utils.email import send_email
 import requests
 from sqlalchemy import create_engine
@@ -67,13 +67,11 @@ with DAG(
     fetch_data_task = PythonOperator(
         task_id="fetch_data",
         python_callable=fetch_data,
-        provide_context=True,
     )
 
     store_data_task = PythonOperator(
         task_id="store_data",
         python_callable=store_data,
-        provide_context=True,
     )
 
     fetch_data_task >> store_data_task

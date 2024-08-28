@@ -9,12 +9,14 @@ sqlalchemy = "*"
 psycopg2-binary = "*"
 requests = "*"
 python-dotenv = "*"
+apache-airflow = "*"
 
 [dev-packages]
 pytest = "*"
 flake8 = "*"
 black = "*"
 apache-airflow = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.12"

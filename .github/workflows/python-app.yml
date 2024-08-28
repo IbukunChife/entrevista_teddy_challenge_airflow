@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: |
           pipenv install --dev
+      - name: Update dependencies for test
+        run: |
+          pipenv update sqlalchemy apache-airflow
       - name: Format code with black
         run: |
           pipenv run black --check .

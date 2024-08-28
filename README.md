@@ -3,7 +3,7 @@
 ![Python App Workflow](https://github.com/zembruzkill/teddy_challenge_airflow/actions/workflows/python-app.yml/badge.svg)
 
 <h1 align="center">
-    <img alt="" title="#hero" src=".github/images/dag_graph.png"/>
+    <img alt="" title="#hero" src=".github/images/dag_graph_.png"/>
 </h1>
 
 ## Overview
@@ -109,24 +109,7 @@ DB_NAME=YOUR_DATABASE_NAME     # Name of the database to be used
 To set up the environment and start Airflow in one step, you can create a `Makefile` with the following commands:
 
 ```makefile
-setup_all: setup_venv setup_airflow_and_db migrate
-
-# Create a virtual environment
-setup_venv:
-	@echo "Setting up virtual environment..."
-	pipenv install --dev
-
-# Run Docker Compose to start the database
-setup_airflow_and_db:
-	@echo "Starting airflow and database with Docker Compose..."
-	docker-compose up -d
-	pipenv run alembic upgrade head
-
-# Perform migrations
-migrate:
-	@echo "Running migrations..."
-	pipenv run alembic upgrade head
-
+make setup_airflow_and_db
 ```
 
 ## Accessing the Airflow Web Server
@@ -155,7 +138,7 @@ To configure a connection in Airflow, follow these steps:
    - Fill in the following details:
 
      - **Conn Id**: A unique identifier for the connection (`postgres_conn`).
-     - **Conn Type**: Select the appropriate connection type (e.g., `Generic`).
+     - **Conn Type**: Select the connection type (in our case we choose, `Generic`).
      - **Host**: Enter the database host (e.g., `YOUR_DATABASE_HOST`).
 
        💡 **Note:** Since we are using the same PostgreSQL instance for Airflow, ensure that the connection host is set to the container name `postgres`. This will allow Airflow to connect to the database correctly within the Docker network.
@@ -172,6 +155,25 @@ To configure a connection in Airflow, follow these steps:
 <h1 align="center">
     <img alt="" title="#hero" src=".github/images/conn.png"/>
 </h1>
+
+## Running the DAG
+
+### How to Run the DAG
+
+After configuring the database connection in Airflow, follow the steps below to run the `teddy_dag` DAG:
+
+1. **Access the Airflow Web Interface:**
+   - Open your web browser and go to the Airflow Web Server URL. The default address is `http://localhost:8080`.
+2. **Navigate to the DAGs Page:**
+   - In the Airflow interface, you will see a list of available DAGs. Locate the DAG named `teddy_dag`.
+3. **Activate the DAG:**
+   - To activate the DAG, click the toggle button next to the DAG name. It should change from "off" to "on".
+4. **Run the DAG:**
+   - After activating the DAG, you can run it immediately. Click the "play" (triangle) icon to start a manual run.
+5. **Monitor Progress:**
+   - Click on the `teddy_dag` to view the execution graph. You can track the status of the `fetch_data` and `store_data` tasks.
+6. **Check the Logs:**
+   - To verify if the tasks were executed successfully, click on the individual tasks and access the logs. This will help you identify any issues that may have occurred during execution.
 
 ## Testing and Linting
 

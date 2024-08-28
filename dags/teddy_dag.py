@@ -1,7 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.hooks.base import BaseHook
-from airflow.utils.email import send_email
 import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
